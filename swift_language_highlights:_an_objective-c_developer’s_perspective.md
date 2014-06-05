@@ -1,5 +1,5 @@
 #Swift Language Highlights: An Objective-C Developer’s Perspective
-
+// 紫夜行者
 If you were like me this Monday, you were sitting back enjoying the keynote, excited to start trying out all the new lovely APIs. And then your ears pricked up as you listened to words about a new language: Swift! It suddenly hit you that this is not an extension to Objective-C, but a completely brand new language. Maybe you were excited? Maybe you were happy? Maybe you didn’t know what to think.
 Swift has surely changed the way we’re going to write iOS and Mac applications in the future. In this post, I outline some of the highlights of the Swift language, contrasting them to their counterparts in Objective-C.
 Note this post is not designed to be a Swift get started guide. Apple have released a fantastic book about this, and I strongly suggest you read it. Instead, this is a discussion of some particularly cool areas to notice and play around with!
@@ -59,6 +59,7 @@ An example of this would be the often useful structure of a pair. You want a pai
     
 Pretty useful! It might seem unclear why you’d want this sort of feature at this time, but trust me: the opportunities are endless. You’ll soon start to see where you can apply these in your own code.
 
+// ChildhoodAndy
 ##Containers
 
 You’ve come to know and love NSArray, NSDictionary and their mutable counterparts. Well, now you are going to have to learn about their Swift equivalents. Fortunately, they’re pretty similar. Here is how you declare arrays and dictionaries:
@@ -138,6 +139,7 @@ It doesn’t quite work for all cases though still. It just counts the number of
     
 All that said, I think you’ll agree that strings are pretty awesome in Swift!
 
+// gloryming
 ##Switch statements
 
 The final thing I want to call out in this brief introduction to Swift is the switch statement. It has been drastically improved in Swift over its Objective-C counterpart. This is an interesting one, because it’s something that couldn’t have been added on to Objective-C without breaking the fundamental truth that Objective-C is a strict superset of C.

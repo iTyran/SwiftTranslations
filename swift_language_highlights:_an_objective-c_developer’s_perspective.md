@@ -60,41 +60,41 @@ An example of this would be the often useful structure of a pair. You want a pai
     
 Pretty useful! It might seem unclear why you’d want this sort of feature at this time, but trust me: the opportunities are endless. You’ll soon start to see where you can apply these in your own code.
 
-// ChildhoodAndy
-##Containers
+## 容器
 
-You’ve come to know and love NSArray, NSDictionary and their mutable counterparts. Well, now you are going to have to learn about their Swift equivalents. Fortunately, they’re pretty similar. Here is how you declare arrays and dictionaries:
+你熟悉并喜爱着 NSArray，NSDictionary 以及它们的可变副本。好了，现在你要学习Swift中等价的容器了。幸运的是，它们非常相似。下面是如何声明一个数组和字典：
 
     let array = [1, 2, 3, 4]
     let dictionary = ["dog": 1, "elephant": 2]
-    
-This should be fairly familiar to you. There’s one slight catch though. In Objective-C, arrays and dictionaries can contain any type you jolly well wish. But in Swift, arrays and dictionaries are typed. And they are typed through the use of our friend from above, generics!
 
-The two variables above can be rewritten with their types expressed (although remember you don’t actually have to do this!) like so:
+你应该对他们很熟悉。但有一个细微差别。在 Objective-C 中，数组和字典可以包含任何你希望的类型。但是在 Swift 中，数组和字典有类型限制，并且通过上面提到的“泛型”的使用来限定类型。
+
+两个以上的变量可以用它们的表达类型来重写（但记住你并不需要真的这么做），如下：
 
     let array: Array<Int> = [1, 2, 3, 4]
     let dictionary: Dictionary<String, Int> = ["dog": 1, "elephant": 2]
 
-Notice how generics are used to define what can be stored in the container. There is also a short form for the array, which is slightly more readable, but essentially boils down to the same thing:
+注意泛型是如何用来定义容器的存储的。还有一个数组的缩写形式，这个更具有可读性，但本质上是一样的。
 
     let array: Int[] = [1, 2, 3, 4]
 
-Notice now that you cannot add anything to the array that isn’t of type Int. This may sound like a bad thing, but it’s incredibly useful. No longer does your API have to document what is being stored in the array it returns from a certain method or stored in a property. You can give that information right up to the compiler so that it can be smarter about error checking and optimisation described earlier.
+注意现在你不能往数组里面添加非`Int`型的元素。这听起来挺糟糕，但它非常有用。再也不需要用API来记录数组里存储了哪些从某个方法返回或者以属性存储的元素。你可以告诉编译器这些信息，编译器在错误检查方面会更加智能，并且可以提早做出优化。
 
-##Mutability
+## 可变性
 
-One interesting thing about collections in Swift is their mutability. There are no “mutable” counterparts to Array and Dictionary. Instead, you use the standard let and var. For those who haven’t read the book yet, or delved into Swift at all (and I suggest you do, ASAP!), let is used to declare a variable as constant, and var is used to declare a variable as, well, variable! let is like using const in C/C++/Objective-C.
-The way this relates to collections is that collections declared using let cannot change size. That is, they cannot be appended to, or removed from. If you try to, then you get an error like so:
+在 Swift 中关于集合的一个有趣点就是它们的可变性。数组和字典并没有可变副本。相反，你要使用标准的`let`和`var`。对于那些没有读过Swfit书籍或者钻研Swift（我建议你尽快）的人来说，`let`用来声明一个常量，`var`用来声明一个可变的变量。`let`就像我们在C/C++/Objective-C中使用的`const`一样。
+
+我们用`let`来声明一个容量不可变的集合。也就是说，它们不能添加元素或者删除元素。如果你尝试那么做，那么你会得到这么一个错误：
 
     let array = [1, 2, 3]
     array.append(4)
     // error: immutable value of type 'Array<Int>' only has mutating members named 'append'
+    
+这同样适用于字典。这样编译器会分析这些集合并适当作出优化。如果大小不能改变，那么内存就不用重新分配来容纳新的值。例如，出于这个原因，总使用`let`来声明一个大小不会改变的集合是个很好的做法。
 
-The same applies to dictionaries. This fact allows the compiler to reason about such collections and make optimisations as appropriate. If the size cannot change, then the backing store that holds the values never needs to be reallocated to accommodate new values, for example. For this reason it is good practice to always use let for collections that won’t change.
+## 字符串
 
-##Strings
-
-Strings in Objective-C are notoriously annoying to deal with. Even simple tasks such as concatenating lots of different values becomes tedious. Take the following example:
+Objective-C的字符串处理起来让人恼火。即使是简单的任务如将很多字符串串联起来也会变得乏味。看下面这个例子：
     
     Person *person = ...;
         
@@ -105,8 +105,8 @@ Strings in Objective-C are notoriously annoying to deal with. Even simple tasks 
     } else {
         [description appendString:@" They are unemployed."];
     }
-
-This is quite tedious and contains a lot of characters that are nothing to do with the data being manipulated. The same in Swift would look like this:
+    
+这是相当繁琐的，并且包含了很多与操作数据无关的字符。同样的功能在 Swift 中是这样的：    
     
     var description = ""
     description += "\(person.name) is \(person.age) years old."
@@ -116,29 +116,26 @@ This is quite tedious and contains a lot of characters that are nothing to do wi
         description += " They are unemployed."
     }
     
-Much clearer! Notice the cleaner way of creating a string from a format, and you can now concatenate strings simply by using +=. No more mutable string and immutable string.
 
+更加清晰了！注意这个创建格式化字符串的简洁方式，现在你可以简单通过`+=`来连接字符串了。没有什么可变和不可变的字符串之说了。
 
-Another fantastic addition to Swift is comparison of strings. You’ll be aware that in Objective-C it is not correct to compare strings for equality using ==. Instead you should use the isEqualToString: method. This is because the former is performing pointer equality. Swift removes this level of indirection and instead leaves you being able to directly use == to compare strings. It also means that strings can be used in switch statements. More on that in the next section though.
+Swift 还增加了一个奇妙的特性就是字符串的比较。你会意识到，在 Objective-C中用`==`来比较两个字符串是否相等是不正确的，相反，你应该使用`isEqualToString:`方法。因为前者比较用的是指针。Swift 消除了这个间接的方法，而是让你直接能够用`==`来比较字符串。这也就意味着，可以在 switch 语句中使用字符串。更多信息见下一节 switch 部分。
 
+最后一个好消息是，Swift原生支持完整的Unicode字符集。你可以在你的字符串甚至是函数和变量名中使用任何Unicode字符。现在，如果你愿意的话，可以创建一个名为💩（一堆便便！）的函数！
 
-The final piece of good news is that Swift supports the full Unicode character set natively. You can use any Unicode code-point in your strings, and even function and variable names! You can now have a function called 💩 (pile of poo!) if you want!
+另外一个重磅消息就是现在有一个内置的方法来计算一个字符串的真实长度。当涉及到完整的Unicode范围时，字符串的长度计算起来并不简单。你不能认为就是以UTF8存储的字符串的字节数，因为一些字符超过1个字节。在 Objective-C中，`NSString`通过计算UTF16的数量来计算长度，使用2-byte对用来存储字符串。但是，由于一些Unicode字符占用两个2-byte对，所以这样从技术上说是不对的。
 
-
-Another nugget of good news is there is now a builtin way to calculate the true length of a string. When it comes to the full Unicode range, string length is non-trivial to compute. You can’t just say it’s the number of bytes used to store the string in UTF8, because some characters take more than 1 byte. In Objective-C, NSString does the calculation by counting the number of UTF16, 2-byte pairs are used to store the string. But that’s not technically correct since some Unicode code-points take up two, 2-byte pairs.
-
-
-Fortunately, Swift has a handy function to calculate the true number of code-points in a string. It uses the top level function called countElements(). You would use it like so:
+幸运的是，Swift有一个便捷的的函数来计算字符串字符的真实数量。它使用一个顶层函数叫做`countElements()`。你可以像这样使用它：
     
     var poos = "&#x1f4a9;&#x1f4a9;"
     countElements(poos) // 2
-
-It doesn’t quite work for all cases though still. It just counts the number of Unicode code-points. It doesn’t take into account special code-points that alter other characters. For example, you can put an umlaut on the previous character. In that case, countElements() would return 2 for the pair, even though it looks like just 1 character. Like so:
+    
+它虽然仍然可以工作，但并不完全适用于所有情况。它只计算Unicode字符的数量。它并没有考虑到能够改变其他字符的特殊字符。例如，你可以把元音变音放在前一个字符处。在这种情况下，`countElements()`将返回2代表一对，尽管它看起来像是1个字符。像这样：
     
     var eUmlaut = "e\u0308" // ë
     countElements(eUmlaut) // 2
     
-All that said, I think you’ll agree that strings are pretty awesome in Swift!
+说了这么多，我想你会同意，Swift处理字符串确实很棒！
 
 // gloryming
 ##Switch statements

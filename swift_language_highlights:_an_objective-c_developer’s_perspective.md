@@ -138,15 +138,15 @@ Swift 还增加了一个奇妙的特性就是字符串的比较。你会意识�
 说了这么多，我想你会同意，Swift处理字符串确实很棒！
 
 // gloryming
-##Switch statements
+##Switch语句
 
-The final thing I want to call out in this brief introduction to Swift is the switch statement. It has been drastically improved in Swift over its Objective-C counterpart. This is an interesting one, because it’s something that couldn’t have been added on to Objective-C without breaking the fundamental truth that Objective-C is a strict superset of C.
+在这个Swift语言的简介中我想讲的是最后一件是Switch语句。与Objective-C相比，它在Swift中被大幅度地改进了。这是件有趣的事，因为在Objective-C中你无法添加一些东西，除非你打破Obejctive-C是严格的意义上C语言的超集这个事实。
 
-The first exciting feature is switching on strings. This is something that you may have wanted to do before, but couldn’t. To “switch” on strings in Objective-C you had to use lots of if-statements with isEqualToString: like so:
+第一个令人兴奋的特征是在字符串上做Switch判断。这可能是你之前就想做的事情，但是一直无法这样做。在Objective-C中如果你想在字符串上做Switch判断，你必须使用大量的if语句配合isEqualToString来达到目的，例如这样：
 
     if ([person.name isEqualToString:@"Matt Galloway"]) {
       NSLog(@"Author of an interesting Swift article");
-    } else if ([person.name isEqualToString:@"Ray Wenderlich"]) {
+    } else if ([person.name isEqualToString:@"tairan.com"]) {
       NSLog(@"Has a great website");
     } else if ([person.name isEqualToString:@"Tim Cook"]) {
       NSLog(@"CEO of Apple Inc.");
@@ -154,21 +154,22 @@ The first exciting feature is switching on strings. This is something that you m
       NSLog(@"Someone else);
     }
 
-This is not particularly readable. It’s also a lot of typing. The same in Swift looks like this:
+这样的实现方式可读性不是非常的好。这种实现有非常多的类型。同样的实现在Swift中是这样的：
 
     switch person.name {
       case "Matt Galloway":
         println("Author of an interesting Swift article")
-      case "Ray Wenderlich":
+      case "tairan.com":
         println("Has a great website")
       case "Tim Cook":
         println("CEO of Apple Inc.")
       default:
         println("Someone else")
     }
-    
-Aside from the switching on a string, notice something interesting here. There are no breaks in sight. That’s because cases in switches no longer fall through to the next one. No more accidentally falling through bugs!
-Now the next switch statement may very well blow your mind, so be prepared!
+
+除了在字符串上使用Switch判断，注意这里还有些有趣的事情。这里没有break关键字。这是因为Switch判断语句里面的每种情况不再传递到下一种。不再有因为意外的传递而产生的bug！
+
+现在，下一个Switch语句会按照你的想法执行，所以准备好吧！
     
     switch i {
     case 0, 1, 2:
@@ -184,15 +185,18 @@ Now the next switch statement may very well blow your mind, so be prepared!
     default:
         break
     }
-    
-First up, there is now a break. This is because switches need to be exhaustive, i.e. they need to handle all cases now. In this case, we want the default to do nothing, so a break is added to declare the intentions that nothing should happen.
 
-The next interesting thing is the ... and .. that you see in there. These are new operators and are used to define ranges. The former, defines a range up to and including the right hand number. The latter defines a range up to and excluding the right hand number. These are incredibly useful.
+首先，现在有一个break关键字。这是因为Switch语句需要穷举，例如现在需要处理所有的情况。这种情况下，我们希望默认是什么都不做，所以添加一个break关键字来声明表示我们希望什么都不做。
 
-The last thing is the ability to define a case as a calculation of the input. In this case, if the value doesn’t match anything from zero to ten, it prints “Even” if it’s even and “Odd” if it’s odd. Magic!
+下一个有趣的事是这里的“...”和“..”操作符。他们是新的操作符用来定义范围的。原来与之对应的是，定义一个范围并且包括右边的数字。然后定义一个范围并不包括右边的数字。这非常有用。
+
+最后一件事是能够像计算输出一样定义一种情况。这种情况下，如果值不能和0~10中的数匹配，并且如果是偶数就会打印“偶数”，如果是奇数则打印“奇数”。奇特吧！
 
 
-##Where To Go From Here?
-This has hopefully given you a taste of the Swift language and what wonderful gems there are in there. But there’s far more! I encourage you to go and read the Apple book, and other Apple documentation that will help you learn this new language. You’re going to have to do it sooner or later!
+##何去何从?
 
-We’d love to hear what you think of the Swift language so far, or if there are any cool highlights you’re excited about. Please chime in with your thoughts below!
+希望以上简介能够给你品尝到Swift语言是多么美妙的一种语言。但是它的美妙并不仅仅如此！我建议你去读一下Apple Book和一些其他苹果文档，这会对你学习这门新语言有帮助。
+
+你迟早会用它去做一些事！
+
+我们很原因听到你对Swift语言目前的想法，或者你一些你特别感兴趣的点。请在下面的评论中告诉我们你的想法！

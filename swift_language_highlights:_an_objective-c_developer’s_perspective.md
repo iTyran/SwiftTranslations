@@ -1,12 +1,23 @@
 #Swift Language Highlights: An Objective-C Developer’s Perspective
 // 紫夜行者
 If you were like me this Monday, you were sitting back enjoying the keynote, excited to start trying out all the new lovely APIs. And then your ears pricked up as you listened to words about a new language: Swift! It suddenly hit you that this is not an extension to Objective-C, but a completely brand new language. Maybe you were excited? Maybe you were happy? Maybe you didn’t know what to think.
+
+翻译：只要你喜欢，你可以坐享keynote乐趣,兴奋的开始尝试所有最新的API。然后你可以暑期耳朵听新语言:Swift!它不是object-c的扩展，它是一门新的语言。你兴奋嘛？你开心嘛？也许你自己也不知道想什么、
+
 Swift has surely changed the way we’re going to write iOS and Mac applications in the future. In this post, I outline some of the highlights of the Swift language, contrasting them to their counterparts in Objective-C.
+
+翻译：Swift无疑将在未来改变我们编写的IOS和mac应用的方式。在本文中，我对Swift语言做了一些高亮处理，包括在object-c里对应的。
+
 Note this post is not designed to be a Swift get started guide. Apple have released a fantastic book about this, and I strongly suggest you read it. Instead, this is a discussion of some particularly cool areas to notice and play around with!
+
+
+翻译：注意本文不是一片Swift入门教程。apple已经发布了关于Swift这本书，并且我强烈建议你阅读。相反，本篇将讨论一些特别酷的要点并且玩转它！
 
 ##Types
 
 The first huge thing that Swift provides is type inference. In a language that uses type inference, the programmer doesn’t need to annotate variables with type information. The compiler infers it from what value is being set to the variable. For example, the compiler can automatically set this variable to a String:
+
+翻译：第一重点是Swift提供的一个type inference，这种语言提供type inference，程序员不需要注释变量的类型。编辑器会自动根据变量去推断是什么类型并且设置这个变量。例如，编辑器可以自动设置这个变量为String型：
 
     // automatically inferred
     var name1 = "Matt"
@@ -15,29 +26,52 @@ The first huge thing that Swift provides is type inference. In a language that u
     
     
 Along with type inference, Swift brings type safety. In Swift, the compiler (in all but a few special cases) knows the full type of an object. This allows it to make some decisions about how to compile code, because it has more information at hand.
+
+翻译：Swift 提供的type inference便利我们在程序中安全的使用。编辑器（基本上所有类型除了少数特殊案例）知道所有对象的类型。这允许他做一些如何编译代码的决策，因为它掌握更多信息。
+
 This is in stark contrast to Objective-C which is extremely dynamic in nature. In Objective-C, no type is truly known at compile time. This is in part because you can add methods to existing classes, add entirely new classes and even change the type of an instance, all at runtime.
+
+翻译：事实上这与object-c强壮动态的性质形成鲜明的对比。在object-c中，就是没有编译时候，其类型是知道的。在运行时，这是因为你可以在已存在的类中添加方法，添加全新的类和在实例中改变类型
+
 Let’s take a look at that in some more detail. Consider the following Objective-C:
+
+翻译： 让我们看更多地细节。参考下面的object-c：
 
     Person *matt = [[Person alloc] initWithName:@"Matt Galloway"];
     [matt sayHello];
     
     
 When the compiler sees the call to sayHello, it can check to see if there’s a method declared in the headers it can see on the type Person called sayHello. It can error if there isn’t one, but that’s about all it can do. This is often enough to catch the first line of bugs that you might introduce. It will catch things like typos. But because of the dynamic nature, the compiler doesn’t know if the sayHello is going to change at runtime or even necessarily even exist. It could be an optional method on a protocol, for example. (Remember all those respondsToSelector: checks?).
+
+翻译：编辑器调用sayHello时，它会去头文件检测声明的方法叫sayHello。如果没有就会报错，这就是它所要做的事情。它通常会在第一行跑出bugs信息给你。它可以捕捉如拼写错误，但是由于动态的特性，在运行时编辑器不知道sayHello的改变或者必要的存在。在协议中它是一个可选方法，例如（记住所有respindsToSelector: checks?）
+
 Because of this lack of strong typing, there is very little the compiler can do to make optimisations when calling methods in Objective-C. The method that handles dynamic dispatch is called objc_msgSend. I’m sure you’ve seen this in many a backtrace! In this function, the implementation of the selector is looked up and then jumped to. You cannot argue this doesn’t add overhead and complexity.
+
+翻译：由于缺乏强转类型，没有编译器可以在objective-c调用方法时做优化。处理动态调度的方法叫obj_msgSend.我很确信的说你已经看到很多向后追踪！在这个方法中，选择器实现了向上然后跳。你不得不同意这增加开销和复杂性。
+
 Now look at the same code in Swift:
-    
+
+翻译：现在我们看下Swift里相似的代码： 
+
     var matt = Person(name:"Matt Galloway")
     matt.sayHello()
     
-In Swift, the compiler knows much more about the types in play in any method call. It knows exactly where sayHello() is defined. Because of this, it can optimise certain call sites by jumping directly to the implementation rather than having to go through dynamic dispatch. In other cases, it can use vtable style dispatch, which is far less overhead than dynamic dispatch in Objective-C. This is the kind of dispatch that C++ uses for virtual functions.
+In Swift, the compiler knows much more about the types in play in any method call. It knows exactly where sayHello() is defined. Because of this, it can optimise（使优化，充分利用） certain （确信）call sites by jumping directly to the implementation rather than having to go through dynamic dispatch. In other cases, it can use vtable style dispatch, which is far less overhead than dynamic dispatch in Objective-C. This is the kind of dispatch that C++ uses for virtual functions.
 The compiler is much more helpful in Swift. It will help stop subtle type related bugs from entering your codebase. It will also make your code run faster by enabling smart optimisations.
 
+翻译：在Swift中，在任何方法调用，编译器对相关类型了如指掌。它很快就定位sayHello()在哪里定义。正是基于此，它跳过动态调度而立即跳向实现达到充分利用优化的效果。此外，在objective-c它使用vtable风格调度，开销远低于动态调度。这种调度在c++中使用虚函数。
+使用Swift编辑器更加有助于我们的开发效率。它将帮助我们进入代码编辑中更好的处理与类型相关的bugs。通过开启智能优化它也将使你的代码运行更加快速。
 
 ##Generics
 
 Another huge feature of Swift is generics. If you’re familiar with C++, then you can think of these as being like templates. Because Swift is strict about types, you must declare a function to take parameters of certain types. But sometimes you have some functionality that is the same for multiple different types.
+
+翻译：Swift另一个特性是泛型。如果你对c++很熟悉，你可以联想他像模板。Swift关于类型是严格的，你必须声明一个函数参数作为特定的类型。但是你也可以定义有多个有不同的类型的参数的方法。
+
 An example of this would be the often useful structure of a pair. You want a pair of values to be stored together. You could implement this in Swift for integers like so:
     
+翻译： 一个经常用的到结构体例子。你想同时存值，在Swift里你需要像下面实现的方式做：
+
     struct IntPair {
         let a: Int!
         let b: Int!
@@ -58,6 +92,8 @@ An example of this would be the often useful structure of a pair. You want a pai
     intPair.equal() // false
     
 Pretty useful! It might seem unclear why you’d want this sort of feature at this time, but trust me: the opportunities are endless. You’ll soon start to see where you can apply these in your own code.
+
+翻译：这非常有用！你可能不是很清楚为什么是这样的特性,但请相信我:机会永远是无穷无尽的。很快你就会在你的代码中随意应用。
 
 // ChildhoodAndy
 ##Containers

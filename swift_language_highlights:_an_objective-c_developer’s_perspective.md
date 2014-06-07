@@ -1,21 +1,21 @@
 # Swift语言亮点：从一个Objective-C开发人员的角度
 
-只要你喜欢，你可以坐享keynote乐趣,兴奋的开始尝试所有最新的API。然后你可以暑期耳朵听新语言:Swift!它不是object-c的扩展，它是一门新的语言。你兴奋嘛？你开心嘛？也许你自己也不知道想什么、
+只要你喜欢，你可以坐享keynote乐趣,兴奋的开始尝试所有最新的API。然后你可以竖起耳朵听新语言:Swift!它不是object-c的扩展，它是一门新的语言。你兴奋么？你开心么？也许你自己也不知道想什么。
 
-Swift无疑将在未来改变我们编写的IOS和mac应用的方式。在本文中，我对Swift语言做了一些高亮处理，包括在object-c里对应的。
+Swift无疑将在未来改变我们编写的IOS和mac应用的方式。在本文中，我简要概述一些Swift语言的亮点，并于object-c里对应的作对比。
 
-注意：本文不是一片Swift入门教程。apple已经发布了关于Swift这本书，并且我强烈建议你阅读。相反，本篇将讨论一些特别酷的要点并且玩转它！
+注意：本文不是一篇Swift入门教程。apple已经发布了关于一本不错的[Swift手册](https://itunes.apple.com/us/book/swift-programming-language/id881256329?mt=11&ign-mpt=uo%3D8)，并且我强烈建议你阅读。相反，本篇将讨论一些特别酷的要点并且玩转它！
 
 ## 类型
 
-第一重点是Swift提供的一个type inference，这种语言提供type inference，程序员不需要注释变量的类型。编辑器会自动根据变量去推断是什么类型并且设置这个变量。例如，编辑器可以自动设置这个变量为String型：
+第一重点是Swift提供的[类型推导](http://en.wikipedia.org/wiki/Type_inference)。一种语言如果提供类型推导，那么程序员不需要注释变量的类型。编译器会自动根据变量去推断是什么类型并且设置这个变量。例如，编译器可以自动设置这个变量为String型：
 
     // automatically inferred
     var name1 = "Matt"
     // explicit typing (optional in this case)
     var name2:String = "Matt"
     
-Swift 提供的type inference便利我们在程序中安全的使用。编辑器（基本上所有类型除了少数特殊案例）知道所有对象的类型。这允许他做一些如何编译代码的决策，因为它掌握更多信息。
+类型推导给Swift语言提供了[类型安全](http://en.wikipedia.org/wiki/Type_safety)。编译器（基本上所有类型除了少数特殊案例）知道所有对象的类型。这使他做一些如何编译代码的决策，因为它掌握更多信息。
 
 事实上这与object-c强壮动态的性质形成鲜明的对比。在object-c中，就是没有编译时候，其类型是知道的。在运行时，这是因为你可以在已存在的类中添加方法，添加全新的类和在实例中改变类型
 
@@ -24,7 +24,7 @@ Swift 提供的type inference便利我们在程序中安全的使用。编辑器
     Person *matt = [[Person alloc] initWithName:@"Matt Galloway"];
     [matt sayHello];
     
-编辑器调用sayHello时，它会去头文件检测声明的方法叫sayHello。如果没有就会报错，这就是它所要做的事情。它通常会在第一行跑出bugs信息给你。它可以捕捉如拼写错误，但是由于动态的特性，在运行时编辑器不知道sayHello的改变或者必要的存在。在协议中它是一个可选方法，例如（记住所有respindsToSelector: checks?）
+编译器调用sayHello时，它会去头文件检测声明的方法叫sayHello。如果没有就会报错，这就是它所要做的事情。它通常会在第一行跑出bugs信息给你。它可以捕捉如拼写错误，但是由于动态的特性，在运行时编辑器不知道sayHello的改变或者必要的存在。在协议中它是一个可选方法，例如（记住所有respindsToSelector: checks?）
 
 由于缺乏强转类型，没有编译器可以在objective-c调用方法时做优化。处理动态调度的方法叫obj_msgSend.我很确信的说你已经看到很多向后追踪！在这个方法中，选择器实现了向上然后跳。你不得不同意这增加开销和复杂性。
 
